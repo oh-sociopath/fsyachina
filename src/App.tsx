@@ -44,7 +44,8 @@ function App() {
 
   return (
     <>
-      <input type="number" onChange={handleChange} />
+      <input type="number" inputMode="numeric" pattern="[0-9]*" onChange={handleChange} />
+      
       <p> Result: </p>
       <ul>
         {years && years !== 0 && <li> {years && `${years} years`} </li>}
