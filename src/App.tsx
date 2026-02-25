@@ -44,6 +44,8 @@ function App() {
   const [weeks, setWeeks] = useState<number>();
   const [days, setDays] = useState<number>();
 
+  console.log('result: ', result);
+
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setResult(event.target.value);
 
