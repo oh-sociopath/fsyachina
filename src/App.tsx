@@ -44,7 +44,7 @@ function App() {
 
   return (
     <>
-      <input type="number" inputMode="numeric" pattern="[0-9]*" onChange={handleChange} />
+      <input type="tel" inputMode="numeric" pattern="[0-9]*" onChange={handleChange} />
       
       <p> Result: </p>
       <ul>
