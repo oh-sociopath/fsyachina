@@ -1,42 +1,8 @@
 
 import './App.css'
 import { useState } from 'react';
+import { calculateDays, calculateMonths, calculateWeeks, calculateYears } from './utils/utils';
 
-function calculateYears(result: number) {
-  return Math.floor(result / 365);
-}
-
-function calculateMonths(result: number) {
-  const years = calculateYears(result);
-  const leftDaysAmount = result - (years * 365);
-  
-  return Math.floor(leftDaysAmount / 30);
-}
-
-function calculateWeeks(result: number) {
-  const years = calculateYears(result);
-  const months = calculateMonths(result);
-  const leftDaysAmount = result - (years * 365);
-  const monthDaychec = months * 30
-
-  console.log('alo: ', leftDaysAmount - monthDaychec);
-  
-
-  return Math.floor((leftDaysAmount - monthDaychec) / 7);
-}
-
-function calculateDays(result: number) {
-  const years = calculateYears(result);
-  const months = calculateMonths(result);
-  const weeks = calculateWeeks(result);
-  const leftDaysAmount = result - (years * 365);
-  const monthDaychec = months * 30;
-  const weeksDay = weeks * 7;
-  const daysLeft = Math.floor(leftDaysAmount - weeksDay);
-
-
-  return Math.floor(daysLeft - monthDaychec);
-}
 function App() {
   const [result, setResult] = useState('');
   const [years, setYears] = useState<number>();
