@@ -5,53 +5,41 @@ import { calculateDays, calculateMonths, calculateWeeks, calculateYears } from '
 
 function App() {
   const [result, setResult] = useState('');
-  const [years, setYears] = useState<number>();
-  const [months, setMonths] = useState<number>();
-  const [weeks, setWeeks] = useState<number>();
-  const [days, setDays] = useState<number>();
-
-  console.log('result: ', result);
+  const [years, setYears] = useState(0);
+  const [months, setMonths] = useState(0);
+  const [weeks, setWeeks] = useState(0);
+  const [days, setDays] = useState(0);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setResult(event.target.value);
+    const value = event.target.value;
+    setResult(value);
 
+    const numericValue = parseInt(value || '0', 10);
 
-    if (+event.target.value >= 365) {
-      const yearsValue = calculateYears(+event.target.value);
-      setYears(yearsValue);
+    if (isNaN(numericValue) || numericValue <= 0) {
+      setYears(0);
+      setMonths(0);
+      setWeeks(0);
+      setDays(0);
+      return;
     }
 
-    if (+event.target.value >= 30) {
-      const monthsValue = calculateMonths(+event.target.value);
-
-      setMonths(monthsValue);
-    }
-
-    if (+event.target.value >= 7) {
-      const weeksValue = calculateWeeks(+event.target.value);
-
-      setWeeks(weeksValue);
-    }
-
-    if (+event.target.value >= 7) {
-      const daysValue = calculateDays(+event.target.value);
-
-      setDays(daysValue);
-    }
-
-
+    setYears(calculateYears(numericValue));
+    setMonths(calculateMonths(numericValue));
+    setWeeks(calculateWeeks(numericValue));
+    setDays(calculateDays(numericValue));
   }
 
   return (
     <>
-      <input type="tel" inputMode="numeric" pattern="[0-9]*" onChange={handleChange} />
+      <input value={result} type="tel" inputMode="numeric" pattern="[0-9]*" onChange={handleChange} />
       
       <p> Result: </p>
       <ul>
-        {years && years !== 0 && <li> {years && `${years} years`} </li>}
-        {months && months !== 0 && <li> {months && `${months} months`} </li>}
-        {weeks && weeks !== 0 && <li>{`${weeks} weeks`}</li>}
-        {days && days !== 0 && <li> {days && `${days} days`} </li>}
+        {years > 0 && <li>{years} years</li>}
+        {months > 0 && <li>{months} months</li>}
+        {weeks > 0 && <li>{weeks} weeks</li>}
+        {days > 0 && <li>{days} days</li>}
       </ul>
     </>
   )
