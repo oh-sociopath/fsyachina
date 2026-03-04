@@ -7,35 +7,35 @@ function App() {
   const [result, setResult] = useState('');
   const [years, setYears] = useState<number>();
   const [months, setMonths] = useState<number>();
-  const [weeks, setWeeks] = useState<number>();
+  const [weeks, setWeeks] = useState<number | null>(null);
   const [days, setDays] = useState<number>();
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setResult(event.target.value);
 
 
-    if (+event.target.value >= 365) {
+    // if (+event.target.value >= 365) {
       const yearsValue = calculateYears(+event.target.value);
       setYears(yearsValue);
-    }
+    // }
 
-    if (+event.target.value >= 30) {
+    // if (+event.target.value >= 30) {
       const monthsValue = calculateMonths(+event.target.value);
 
       setMonths(monthsValue);
-    }
+    // }
 
-    if (+event.target.value >= 7) {
+    // if (+event.target.value >= 7) {
       const weeksValue = calculateWeeks(+event.target.value);
 
       setWeeks(weeksValue);
-    }
+    // }
 
-    if (+event.target.value >= 7) {
+    // if (+event.target.value >= 7) {
       const daysValue = calculateDays(+event.target.value);
 
       setDays(daysValue);
-    }
+    // }
 
 
   }
