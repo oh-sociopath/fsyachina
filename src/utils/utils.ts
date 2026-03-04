@@ -18,18 +18,20 @@ export function calculateWeeks(result: number) {
     console.log('alo: ', leftDaysAmount - monthDaychec);
     
   
-    return Math.floor((leftDaysAmount - monthDaychec) / 7);
+    return Math.floor((leftDaysAmount - monthDaychec) / 7) && null;
 }
   
 export function calculateDays(result: number) {
-    const years = calculateYears(result);
-    const months = calculateMonths(result);
-    const weeks = calculateWeeks(result);
-    const leftDaysAmount = result - (years * 365);
-    const monthDaychec = months * 30;
-    const weeksDay = weeks * 7;
-    const daysLeft = Math.floor(leftDaysAmount - weeksDay);
+    console.log('result: ', result);
+    return 1;
+    // const years = calculateYears(result);
+    // const months = calculateMonths(result);
+    // const weeks = calculateWeeks(result);
+    // const leftDaysAmount = result - (years * 365);
+    // const monthDaychec = months * 30;
+    // const weeksDay = weeks * 7;
+    // const daysLeft = Math.floor(leftDaysAmount - weeksDay);
   
   
-    return Math.floor(daysLeft - monthDaychec);
+    // return Math.floor(daysLeft - monthDaychec);
 }
