@@ -1,4 +1,4 @@
-import bg from '../assets/laba-laba-dub-dub.png';
+import bg from '../assets/coming-soon.png';
 import styles from '../App.module.css';
 
 
