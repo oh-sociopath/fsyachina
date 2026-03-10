@@ -5,4 +5,14 @@
     background-repeat: no-repeat;
     width: 100vw;
     height: calc(100vh - 72px);
+    background-color: #000000;
+}
+
+@media (max-width: 768px) {
+    .bgImage {
+        height: auto;
+        margin-top: 150px;
+        background-size: 80% auto;
+        background-position: center center;
+    }
 }
