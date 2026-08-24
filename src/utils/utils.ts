@@ -1,37 +1,21 @@
-export function calculateYears(result: number) {
-    return Math.floor(result / 365);
-  }
-  
-export function calculateMonths(result: number) {
-    const years = calculateYears(result);
-    const leftDaysAmount = result - (years * 365);
-    
-    return Math.floor(leftDaysAmount / 30);
-}
+import { intervalToDuration } from 'date-fns';
 
-export function calculateWeeks(result: number) {
-    const years = calculateYears(result);
-    const months = calculateMonths(result);
-    const leftDaysAmount = result - (years * 365);
-    const monthDaychec = months * 30
-  
-    console.log('alo: ', leftDaysAmount - monthDaychec);
-    
-  
-    return Math.floor((leftDaysAmount - monthDaychec) / 7) && null;
-}
-  
-export function calculateDays(result: number) {
-    console.log('result: ', result);
-    return 1;
-    // const years = calculateYears(result);
-    // const months = calculateMonths(result);
-    // const weeks = calculateWeeks(result);
-    // const leftDaysAmount = result - (years * 365);
-    // const monthDaychec = months * 30;
-    // const weeksDay = weeks * 7;
-    // const daysLeft = Math.floor(leftDaysAmount - weeksDay);
-  
-  
-    // return Math.floor(daysLeft - monthDaychec);
+export function formatDate(daysOffset: number) {
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + daysOffset + 1);
+
+    const isoBase = targetDate.toISOString().split('T')[0];
+
+    const duration = intervalToDuration({
+        start: new Date(),
+        end: new Date(isoBase)
+    });
+
+    const { years, months, days} = duration;
+
+    return {
+        years,
+        months,
+        days
+    }
 }

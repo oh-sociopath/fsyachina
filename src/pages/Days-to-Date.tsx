@@ -1,51 +1,77 @@
 import { useState } from 'react';
-import { calculateDays, calculateMonths, calculateWeeks, calculateYears } from '../utils/utils.ts';
+import { formatDate} from '../utils/utils.ts';
 
 export const DaysToDate = () => {
-    const [result, setResult] = useState('');
-    const [years, setYears] = useState<number>();
-    const [months, setMonths] = useState<number>();
-    const [weeks, setWeeks] = useState<number | null>(null);
-    const [days, setDays] = useState<number>();
+    const [inputValue, setInputValue] = useState<number | null>();
+    const [years, setYears] = useState<number | null>();
+    const [months, setMonths] = useState<number | null>();
+    const [days, setDays] = useState<number | null>();
+    const [error, setError] = useState<string>('');
+    const [errorIndikator, setErrorIndikator] = useState<boolean>(false);
+
+    const filterInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        // 1. Allow shortcuts (Cmd/Ctrl + any key)
+        if (event.metaKey || event.ctrlKey) {
+            return;
+        }
+
+        // 2. Block non-numeric single characters
+        // Allow functional keys like Backspace, Tab, Enter, etc.
+        // event.key length > 1 usually indicates a special key (e.g., "Backspace")
+        if (event.key.length === 1 && !/[0-9]/.test(event.key)) {
+            event.preventDefault();
+            setErrorIndikator(true);
+            setError('You can enter only numbers');
+            return;
+        }
+
+        // 3. Reset error for valid inputs (numbers or functional keys like Backspace)
+        setErrorIndikator(false);
+        setError('');
+    };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setResult(event.target.value);
+        console.log('event.target.value: ', event.target.value);
+        const value = event.target.value === '' ? null : Number(event.target.value);
+        setInputValue(value);
+        const {
+            years,
+            months,
+            days
+        } = formatDate(Number(event.target.value));
 
+        if (years) {
+            setYears(years)
+        } else {
+            setYears(null);
+        }
 
-        // if (+event.target.value >= 365) {
-        const yearsValue = calculateYears(+event.target.value);
-        setYears(yearsValue);
-        // }
+        if (months) {
+            setMonths(months);
+        } else {
+            setMonths(null);
+        }
 
-        // if (+event.target.value >= 30) {
-        const monthsValue = calculateMonths(+event.target.value);
-
-        setMonths(monthsValue);
-        // }
-
-        // if (+event.target.value >= 7) {
-        const weeksValue = calculateWeeks(+event.target.value);
-
-        setWeeks(weeksValue);
-        // }
-
-        // if (+event.target.value >= 7) {
-        const daysValue = calculateDays(+event.target.value);
-
-        setDays(daysValue);
-        // }
-
-
+        if (days) {
+            setDays(days);
+        } else {
+            setDays(null);
+        }
     }
     return (
         <>
-            <input value={result} type="tel" inputMode="numeric" pattern="[0-9]*" onChange={handleChange} />
+            { errorIndikator && <p> {error} </p> }
+            <input
+                value={inputValue ?? ''}
+                onChange={handleChange}
+                onKeyDown={filterInput}
+                type={'text'}
+            />
 
             <p> Result: </p>
             <ul>
                 {years && years !== 0 && <li> {years && `${years} years`} </li>}
                 {months && months !== 0 && <li> {months && `${months} months`} </li>}
-                {weeks && weeks !== 0 && <li>{`${weeks} weeks`}</li>}
                 {days && days !== 0 && <li> {days && `${days} days`} </li>}
             </ul>
         </>
